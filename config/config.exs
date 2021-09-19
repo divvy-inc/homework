@@ -8,7 +8,7 @@ use Mix.Config
 # if you want to provide default values for your application for
 # third-party users, it should be done in your "mix.exs" file.
 
-config :hound, port: 4444, browser: "chrome_headless"
+config :hound, port: 4444, browser: "chrome"
 
 # You can configure your application as:
 #

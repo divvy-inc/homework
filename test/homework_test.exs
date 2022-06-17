@@ -36,4 +36,18 @@ defmodule HomeworkTest do
     dismiss_dialog()
     assert inner_text(result) == "You clicked: Cancel"
   end
+  test "JS prompt" do
+    navigate_to "https://the-internet.herokuapp.com/javascript_alerts"
+    element = find_element(:xpath, "//*[@id='content']/div/ul/li[3]/button")
+    click(element)
+
+    assert dialog_text() == "I am a JS prompt"
+    prompt_input = "Welcome to Divvy"
+    input_into_prompt(prompt_input)
+    accept_dialog()
+
+    result = find_element(:id, "result")
+    assert inner_text(result) == "You entered: " <> prompt_input
+    assert attribute_value(result, "style") == "color: green;"
+  end
 end

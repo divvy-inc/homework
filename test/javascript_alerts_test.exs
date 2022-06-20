@@ -7,7 +7,6 @@ defmodule JavascriptAlerts do
     navigate_to "https://the-internet.herokuapp.com/javascript_alerts"
   end
 
-  # Start hound session and destroy when tests are run
   describe "Javascript Alerts" do
     hound_session()
     test "JS alert" do
@@ -18,6 +17,7 @@ defmodule JavascriptAlerts do
       assert dialog_text() == "I am a JS Alert"
       accept_dialog()
       
+      # checks confirmation of closing JS alert
       result = find_element(:id, "result")
       assert inner_text(result) == "You successfully clicked an alert"
       assert attribute_value(result, "style") == "color: green;"
@@ -53,6 +53,7 @@ defmodule JavascriptAlerts do
       input_into_prompt(prompt_input)
       accept_dialog()
 
+      # checks if text entered is displayed
       result = find_element(:id, "result")
       assert inner_text(result) == "You entered: " <> prompt_input
       assert attribute_value(result, "style") == "color: green;"

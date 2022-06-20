@@ -8,7 +8,6 @@ defmodule DynamicContent do
     navigate_to "https://the-internet.herokuapp.com/dynamic_content"
   end
 
-  # Start hound session and destroy when tests are run
   describe "Dynamic Content" do
     hound_session()
     test "new image is found when page is refreshed" do

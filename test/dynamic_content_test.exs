@@ -3,7 +3,6 @@ defmodule DynamicContet do
   use Hound.Helpers
   use ExUnit.Case
   use Retry
-#   import Stream
   
   def go_to_dynamic_content() do 
     navigate_to "https://the-internet.herokuapp.com/dynamic_content"
@@ -17,7 +16,7 @@ defmodule DynamicContet do
     
         img_1 = find_element(:xpath, "//*[@id='content']/div[1]/div[1]/img")
         img_src_1 = attribute_value(img_1, "src")
-        
+
         # continues to refresh page until we assertion is true
         retry with: constant_backoff(100) |> Stream.take(10) do
             refresh_page()

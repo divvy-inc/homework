@@ -1,4 +1,4 @@
-defmodule DynamicContet do
+defmodule DynamicContent do
   # Import helpers
   use Hound.Helpers
   use ExUnit.Case

@@ -29,6 +29,27 @@ defmodule DynamicControls do
         
         assert wait_for(fn -> element?(:id, "message") end)
         assert inner_text(find_element(:id, "message")) == "It's gone!"
+        assert inner_text(remove_button) == "Add"
+    end
+    
+    test "enable/disable input field" do
+        go_to_dynamic_controls()
+
+        input_field = find_element(:xpath, "//*[@id='input-example']/input")
+        assert element_enabled?(input_field) == false
+
+        enable_button = find_element(:xpath, "//*[@id='input-example']/button")
+        click(enable_button)
+        assert find_element(:id, "loading")
+        assert wait_for(fn -> element_enabled?(input_field) end)
+        assert inner_text(find_element(:id, "message")) == "It's enabled!"
+        assert inner_text(enable_button) == "Disable"
+
+        click(enable_button)
+        assert find_element(:id, "loading")
+        assert wait_for(fn -> element_enabled?(input_field) == false end)
+        assert inner_text(find_element(:id, "message")) == "It's disabled!"
+        assert inner_text(enable_button) == "Enable"
     end
   end
 end

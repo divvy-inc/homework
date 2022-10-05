@@ -8,8 +8,9 @@ use Mix.Config
 # if you want to provide default values for your application for
 # third-party users, it should be done in your "mix.exs" file.
 
+# config :hound, driver: "chrome_driver", browser: "chrome_headless", app_port: 4002
 config :hound, driver: "chrome_driver"
-
+config :hound, http: [{ "follow_redirect", false}]
 # You can configure your application as:
 #
 #     config :homework, key: :value

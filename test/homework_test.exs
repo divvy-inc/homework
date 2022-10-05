@@ -15,7 +15,6 @@ defmodule HomeworkTest do
   end
 
   def fill_firstname_and_lastname_input_field(first_name,last_name) do
-    #firstname empty and lastname with a valid input
     first_name_element = find_element(:name, "firstname")
     element_displayed?(first_name_element)
     fill_field(first_name_element, first_name)
@@ -88,6 +87,7 @@ defmodule HomeworkTest do
 
   end
 
+  #Starts a hound session
   hound_session()
 
   @tag :account_creation_negative_test
@@ -129,10 +129,11 @@ defmodule HomeworkTest do
     click(fb_new_account_page)
     fill_firstname_and_lastname_input_field(@first_name,@last_name)
     click_next_button_field()
-    # invalid date of birth
+
     try do
       date_of_birth_text = find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[4]/div[1]/span/div[1]", 10)
       assert visible_text(date_of_birth_text) == "What's your birthday?"
+      # invalid date of birth
       fill_date_of_birth_field(10,5,2)
       registration_error = find_element(:xpath, "//*[@id=\"registration-error\"]/div", 10)
       assert(visible_text(registration_error)=="It looks like you entered the wrong info. Please be sure to use your real birthday.")
@@ -166,11 +167,11 @@ defmodule HomeworkTest do
     :timer.sleep(1000)
     click_next_button_field()
 
-    #empty phone number
+
     try do
       assert(visible_text(find_element(:xpath, "//*[@id=\"contactpoint_step_title\"]/span", 10))
             == "Enter your phone number")
-      fill_contact_information(nil)
+      fill_contact_information(nil) #empty phone number
       click_next_button_field()
       alert_text = find_element(:id, "registration-error")
       assert visible_text(alert_text) == "Please enter a valid phone number."
@@ -212,11 +213,12 @@ defmodule HomeworkTest do
     fill_contact_information(1234567)
     click_next_button_field()
 
-    #no input for gender
+
     :timer.sleep(400)
     try do
       assert(visible_text(find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[6]/div[1]/span"))
       == "What's your gender?")
+      #no input for gender
       next_button_field = find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[9]/div[2]/button[1]")
       click(next_button_field)
       alert_text = find_element(:id, "registration-error")
@@ -236,11 +238,10 @@ defmodule HomeworkTest do
     fill_contact_information(1234567)
     click_next_button_field()
 
-    #no input for gender
     :timer.sleep(400)
     assert(visible_text(find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[6]/div[1]/span"))
     == "What's your gender?")
-    #input for gender to proceed to next page
+    #valid input for gender to proceed to next page
     :timer.sleep(400)
     select_gender("Male")
     next_button_field = find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[9]/div[2]/button[1]")
@@ -288,10 +289,8 @@ defmodule HomeworkTest do
     click_next_button_field()
     :timer.sleep(400)
     select_gender("Male")
-    # :timer.sleep(1000)
-
     click_next_button_field()
-    # :timer.sleep(1000)
+
     assert(visible_text(find_element(:xpath, "//*[@id=\"password_step_title\"]/span", 10))
     == "Choose a Password")
 
@@ -303,7 +302,7 @@ defmodule HomeworkTest do
       assert visible_page_text() != "We'll take you through a few steps to confirm your account on Facebook.."
     rescue
         error -> take_screenshot("password_assertion_failure_with_alphabets.png")
-        raise error
+                 raise error
     end
   end
 
@@ -316,9 +315,6 @@ defmodule HomeworkTest do
     click_next_button_field()
     fill_contact_information(1234567)
     click_next_button_field()
-
-
-
     :timer.sleep(400)
     select_gender("Male")
     click_next_button_field()
@@ -332,11 +328,10 @@ defmodule HomeworkTest do
       input_password(123456)
       signup()
       :timer.sleep(4000)
-
       assert visible_page_text() != @success_msg
     rescue
       error -> take_screenshot("password_assertion_failure_with_number.png")
-      raise error
+               raise error
     end
   end
 
